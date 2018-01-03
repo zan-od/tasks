@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Tasks')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container-fluid">
+		<h1 th:text="${currentBoard.name}">Board</h1>
+		<br></br>
+		<h2 th:text="${task.id} != null ? 'Edit task' : 'Add task'">Edit task</h2>
+		<br></br>
+		<form th:action="${task.id} != null ? @{/task/edit/{taskId}(taskId=${task.id})} : @{/task/add}" th:object="${task}" method="post">
+			<div class="form-group">
+				<input type="text" id="input-client" th:field="*{client}" class="form-control" placeholder="Select client"/>
+			</div>
+			<div class="form-group">
+				<input type="text" th:field="*{name}" class="form-control" placeholder="Task name"/>
+			</div>
+			<input type="submit" value="Save1"/>
+		</form>
+		
+<!-- 		<table class="table"> -->
+<!-- 			<thead> -->
+<!-- 				<tr> -->
+<!-- 					<th th:text="${columns.get('name')}"></th> -->
+<!-- 					<th th:text="${columns.get('duration')}"></th> -->
+<!-- 					<th></th> -->
+<!-- 					<th/> -->
+<!-- 				</tr> -->
+<!-- 			</thead> -->
+<!-- 			<tbody> -->
+<!-- 				<tr th:each="task: ${tasks}"> -->
+<!-- 					<td th:text="${task.getName()}" th:href="@{/task/{taskId}(taskId=${task.id})}">name</td> -->
+<!-- 					<td th:text="${task.getDuration()}">duration</td> -->
+<!-- 					<td><a class="btn btn-danger btn-sm" th:href="@{/task/delete/{taskId}(taskId=${task.id})}">delete</a></td> -->
+<!-- 					<td> -->
+<!-- 						<a class="btn btn-primary btn-sm" th:if="${!task.isStarted()}" th:href="@{/task/start/{taskId}(taskId=${task.id})}">Start</a> -->
+<!-- 						<a class="btn btn-warning btn-sm" th:if="${task.isStarted()}" th:href="@{/task/stop/{taskId}(taskId=${task.id})}">Stop</a> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
+	</div>
+	
+	<script th:inline="javascript">
+		$(document).ready(function() {
+		
+		    /*<![CDATA[*/
+		    
+	        var url = /*[[@{/searchClient}]]*/ 'url';
+
+	        /*]]>*/
+	       
+// 			$('#input-client').autocomplete({
+// 				serviceUrl: url,
+// 				paramName: "clientName",
+// 				delimiter: ",",
+// 			   transformResult: function(response) {
+			
+// 				return {
+// 				  //must convert json to javascript object before process
+// 				  suggestions: $.map($.parseJSON(response), function(item) {
+			
+// 				      return { value: item.name, data: item.id };
+// 				   })
+			
+// 				 };
+			
+// 			    }
+			
+// 			 });
+	        
+	        $('#input-client').autocomplete({
+	        	source: ['Java', 'JavaScript', 'JavaRush']
+	        });
+	        
+		
+		 });
+  </script>
+</body>
+</html>

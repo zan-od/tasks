@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Welcome')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container">
+		<div class="row justify-content-md-center">
+		<div class="col-6">
+			<h1> Welcome to <strong>Tasks</strong>.</h1>	
+		    <p>You can <a href="/login">login</a> or <a href="/registration">register</a>.</p>
+		    <p/>
+		    <p> To try this service <a href="/login-demo">login to demo account</a></p>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

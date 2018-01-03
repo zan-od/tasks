@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Login')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container">
+		<div class="row justify-content-md-center">
+		<div class="col-6">
+		
+		<form th:action="@{/login}" method="post">
+			<div class="alert alert-success mb-1" role="alert" th:if="${message} != null" th:text="${message}">Logout message</div>
+			<div class="form-group">
+				<input type="text" name="username" class="form-control" placeholder="Username" autofocus="true"/>
+				<div class="alert alert-danger my-1" role="alert" th:if="${error} != null" th:text="${error}">Username Error</div>
+			</div>
+			<div class="form-group $(status.error ? 'has-error' : '')">
+				<input type="password" name="password" class="form-control" placeholder="Password"/>
+			</div>
+			
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+			<h4 class="text-center"><a th:href="@{/registration}">Create an account</a></h4>
+		</form>
+		
+		</div>
+		</div>
+	</div>
+</body>
+</html>
