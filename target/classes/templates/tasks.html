@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Tasks')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container-fluid">
+		<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content justify-content-center">
+			<h1 th:text="${currentBoard.name}">Board</h1>
+			<br></br>
+			<p></p>
+			<div>
+				<a class="btn btn-primary btn-sm" href="/task/add/">New task</a>
+			</div>
+			
+			<table class="table table-sm tasks">
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th th:text="${columns.get('name')}"></th> -->
+<!-- 						<th th:text="${columns.get('duration')}"></th> -->
+<!-- 						<th></th> -->
+<!-- 						<th/> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+				<tbody>
+					<tr th:each="task: ${tasks}">
+						<td class="task-name">
+							<a th:text="${task.getName()}" th:href="@{/task/edit/{taskId}(taskId=${task.id})}">Edit task</a>
+						</td>
+						<td class="task-duration" th:text="${task.getDuration()}">duration</td>
+<!-- 						<td><a class="btn btn-danger btn-sm" th:href="@{/task/delete/{taskId}(taskId=${task.id})}">delete</a></td> -->
+						<td class="task-button">
+							<a class="btn btn-primary btn-sm" th:if="${!task.isStarted()}" th:href="@{/task/start/{taskId}(taskId=${task.id})}">Start</a>
+							<a class="btn btn-warning btn-sm" th:if="${task.isStarted()}" th:href="@{/task/stop/{taskId}(taskId=${task.id})}">Stop</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('New board')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<form th:action="@{/board/add}" th:object="${boardForm}" method="post">
+	<input type="text" id="name" th:field="*{name}" />
+	<input type="submit" value="Save"/>
+	</form>
+</body>
+</html>

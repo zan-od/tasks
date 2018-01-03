@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('admin')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<div class="container">
+		<form th:action="@{/logout}" method="post">
+			<input type="hidden" th:name="" th:value="">
+		</form>
+	</div>
+	<h2>Admin page 
+		<a onclick="document.forms['logoutForm'].submit();">Logout</a>
+	</h2>
+	
+</body>
+</html>
