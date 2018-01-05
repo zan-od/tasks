@@ -16,6 +16,7 @@ import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Task;
 import com.zan.tasks.model.User;
 import com.zan.tasks.service.BoardService;
+import com.zan.tasks.service.ClientService;
 import com.zan.tasks.service.TaskService;
 import com.zan.tasks.service.UserService;
 
@@ -30,6 +31,9 @@ public class TaskController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ClientService clientService;
 	
 	private Board getCurrentBoard(){
 		return userService.getCurrentUser().getCurrentBoard();
@@ -79,14 +83,17 @@ public class TaskController {
 		Task newTask = taskService.getTask(taskId);
 		model.addAttribute("task", newTask);
 		model.addAttribute("currentBoard", getCurrentBoard());
+		model.addAttribute("client_id", newTask.getClient().getId());
 		
 		return "task";
 	}
 	
 	@PostMapping({"/task/add", "/task/edit/{taskId}"})
-    public String saveTask(@ModelAttribute("task") Task task) {
+    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id") Long clientId) {
 		
+		//System.out.println("task id: " + task.getId());
 		task.setBoard(getCurrentBoard());
+		task.setClient(clientService.getClient(clientId));
 		taskService.saveTask(task);
         
 		return "redirect:/tasks";

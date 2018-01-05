@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zan.tasks.model.Client;
 import com.zan.tasks.service.ClientService;
@@ -51,4 +55,14 @@ public class ClientController {
         
 		return "redirect:/clients";
     }
+	
+	@RequestMapping(value = "/searchClient", method = RequestMethod.POST)
+	public @ResponseBody
+	List<Client> searchClient(@RequestParam String query) {
+
+		//System.out.println(query);
+		List<Client> clients = clientService.findClientsByName(query);
+		
+		return clients;
+	}
 }

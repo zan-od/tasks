@@ -29,4 +29,18 @@ public class ClientServiceImpl implements ClientService {
 		clientDAO.delete(id);		
 	}
 
+	@Override
+	public List<Client> findClientsByName(String name) {
+		return clientDAO.findByNameContainingIgnoreCase(name);
+	}
+
+	@Override
+	public Client getClient(Long id) {
+		if ((id==null) || (id==0)) {
+			return null;
+		}
+		
+		return clientDAO.getOne(id);
+	}
+
 }

@@ -10,4 +10,8 @@ public interface ClientService {
 	public List<Client> listClients();
 	
 	public void deleteClient(Long id);
+	
+	public List<Client> findClientsByName(String name);
+	
+	public Client getClient(Long id);
 }

@@ -1,4 +1,8 @@
-td .task-duration {
+.task-duration {
 	text-align: right;
-	size: 20em;
+	width: 5em;
+}
+
+.task-button {
+	width: 20px;
 }
