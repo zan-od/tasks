@@ -24,7 +24,8 @@
 			<input type="submit" value="Save"/>
 		</form>
 		
-<!-- 		<table class="table"> -->
+		<br></br>
+		<table class="table">
 <!-- 			<thead> -->
 <!-- 				<tr> -->
 <!-- 					<th th:text="${columns.get('name')}"></th> -->
@@ -33,18 +34,18 @@
 <!-- 					<th/> -->
 <!-- 				</tr> -->
 <!-- 			</thead> -->
-<!-- 			<tbody> -->
-<!-- 				<tr th:each="task: ${tasks}"> -->
-<!-- 					<td th:text="${task.getName()}" th:href="@{/task/{taskId}(taskId=${task.id})}">name</td> -->
-<!-- 					<td th:text="${task.getDuration()}">duration</td> -->
+			<tbody>
+				<tr th:each="timeInterval: ${task.timeIntervals}">
+					<td th:text="${timeInterval.performer.name}">user</td>
+					<td th:text="${timeInterval.duration}">duration</td>
 <!-- 					<td><a class="btn btn-danger btn-sm" th:href="@{/task/delete/{taskId}(taskId=${task.id})}">delete</a></td> -->
 <!-- 					<td> -->
 <!-- 						<a class="btn btn-primary btn-sm" th:if="${!task.isStarted()}" th:href="@{/task/start/{taskId}(taskId=${task.id})}">Start</a> -->
 <!-- 						<a class="btn btn-warning btn-sm" th:if="${task.isStarted()}" th:href="@{/task/stop/{taskId}(taskId=${task.id})}">Stop</a> -->
 <!-- 					</td> -->
-<!-- 				</tr> -->
-<!-- 			</tbody> -->
-<!-- 		</table> -->
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	
 	<script th:inline="javascript">

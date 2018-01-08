@@ -6,6 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
+import com.zan.tasks.service.DurationFormatterService;
+
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
@@ -16,5 +18,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+	
+	@Bean
+    public DurationFormatterService durationFormatter() {
+        return new DurationFormatterService();
     }
 }

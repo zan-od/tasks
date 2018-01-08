@@ -1,8 +1,6 @@
 package com.zan.tasks.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import com.zan.tasks.model.Task;
 import com.zan.tasks.model.User;
 import com.zan.tasks.service.BoardService;
 import com.zan.tasks.service.ClientService;
+import com.zan.tasks.service.DurationFormatterService;
 import com.zan.tasks.service.TaskService;
 import com.zan.tasks.service.UserService;
 
@@ -35,6 +34,9 @@ public class TaskController {
 	@Autowired
 	private ClientService clientService;
 	
+	@Autowired
+	DurationFormatterService durationFormatter;
+	
 	private Board getCurrentBoard(){
 		return userService.getCurrentUser().getCurrentBoard();
  	}
@@ -44,27 +46,22 @@ public class TaskController {
         
 		User currentUser = userService.getCurrentUser();
 		Board currentBoard = currentUser.getCurrentBoard();
-		Task newTask = new Task();
-		newTask.setBoard(currentBoard);
-		
-		Map<String, String> columns = new HashMap<String, String>();
-		columns.put("id", "ID");
-		columns.put("name", "NAME");
-		columns.put("duration", "DURATION");
-		
-		model.addAttribute("columns", columns);
-		model.addAttribute("new_task", newTask);
+		TasksView tasksView = new TasksView();
 		
 		List<Task> tasks = (List<Task>) taskService.listBoardTasks(currentBoard);
-		model.addAttribute("tasks", tasks);
-		
 		for (Task task : tasks) {
 			task.setStarted(taskService.isTaskStarted(task, currentUser));
 			task.setDuration(taskService.getTaskDuration(task, currentUser));
+			
+			tasksView.addTask(task);
 		}
 		
 		model.addAttribute("boards", boardService.getBoards(currentUser));
 		model.addAttribute("currentBoard", currentBoard);
+		
+		tasksView.sort();
+		model.addAttribute("tasksView", tasksView);
+		model.addAttribute("durationFormatter", durationFormatter);
 		
 		return "tasks";
     }
@@ -83,7 +80,7 @@ public class TaskController {
 		Task newTask = taskService.getTask(taskId);
 		model.addAttribute("task", newTask);
 		model.addAttribute("currentBoard", getCurrentBoard());
-		model.addAttribute("client_id", newTask.getClient().getId());
+		model.addAttribute("client_id", newTask.getClient() == null ? null : newTask.getClient().getId());
 		
 		return "task";
 	}

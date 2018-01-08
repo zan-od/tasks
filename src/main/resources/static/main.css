@@ -1,8 +1,21 @@
+.task-check {
+	width: 10px;
+}
+
 .task-duration {
 	text-align: right;
-	width: 5em;
+	width: 10em;
+}
+
+.task-started-icon {
+	width: 25px;
 }
 
 .task-button {
 	width: 20px;
+}
+
+.row-client {
+	color: brown;
+	font-weight: bold;
 }
