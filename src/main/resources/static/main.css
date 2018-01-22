@@ -19,3 +19,12 @@
 	color: brown;
 	font-weight: bold;
 }
+
+.table-header {
+	margin-top: 60px;
+	opacity: 0.5;
+}
+
+.table-body {
+	margin-top: 155px;
+}

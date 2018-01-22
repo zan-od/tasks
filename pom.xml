@@ -63,6 +63,10 @@
 <!-- 			<version>3.0.1.RELEASE</version> -->
 <!-- 			<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version> -->
 		</dependency>
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

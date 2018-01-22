@@ -1,5 +1,7 @@
 package com.zan.tasks;
 
+import static org.junit.Assert.assertFalse;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,4 +15,9 @@ public class TasksApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void SimpleTest(){
+		assertFalse(false);
+	}
+	
 }
