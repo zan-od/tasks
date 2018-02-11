@@ -17,11 +17,14 @@ import com.zan.tasks.model.User;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+	private BoardDAO boardDAO;
+	private UserService userService;
+	
 	@Autowired
-	BoardDAO boardDAO;
-
-	@Autowired
-	UserService userService;
+	public BoardServiceImpl(BoardDAO boardDAO, UserService userService){
+		this.boardDAO = boardDAO;
+		this.userService = userService;
+	}
 	
 	@Override
 	public void addBoard(Board board, User user) {

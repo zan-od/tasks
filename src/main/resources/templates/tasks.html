@@ -4,18 +4,24 @@
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+	<header th:replace="header :: menu(${boards}, ${currentBoard})">
 		Navigation bar
-	</nav>
-	<div class="container-fluid">
+	</header>
+	<div class="container-fluid table-header fixed-top">
 		<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content justify-content-center">
 			<h1 th:text="${currentBoard.name}">Board</h1>
-			<p></p>
-			
-			<div>
+			<div class="fixed-top1">
 				<a class="btn btn-primary btn-sm" href="/task/add/">New task</a>
 			</div>
-			<p></p>
+		</div>
+	</div>
+	<div class="container-fluid table-body">
+		<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content justify-content-center">
+			
+<!-- 			<p></p> -->
+<!-- 			<h1 th:text="${currentBoard.name}">Board</h1> -->
+<!-- 			<p></p> -->
+			
 			
 			<table class="table table-sm table-hover tasks">
 				<tbody>

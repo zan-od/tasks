@@ -66,8 +66,9 @@ id integer not null auto_increment primary key,
 name varchar not null,
 board_id integer,
 client_id integer,
-status integer,
+status smallint,
 started boolean not null default false,
+closed boolean not null default false,
 duration integer not null default 0
 
 );

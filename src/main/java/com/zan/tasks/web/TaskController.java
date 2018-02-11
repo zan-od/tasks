@@ -80,13 +80,13 @@ public class TaskController {
 		Task newTask = taskService.getTask(taskId);
 		model.addAttribute("task", newTask);
 		model.addAttribute("currentBoard", getCurrentBoard());
-		model.addAttribute("client_id", newTask.getClient() == null ? null : newTask.getClient().getId());
+		model.addAttribute("client_id", newTask.getClient() == null ? 0 : newTask.getClient().getId());
 		
 		return "task";
 	}
 	
 	@PostMapping({"/task/add", "/task/edit/{taskId}"})
-    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id") Long clientId) {
+    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id")  Long clientId) {
 		
 		//System.out.println("task id: " + task.getId());
 		task.setBoard(getCurrentBoard());
