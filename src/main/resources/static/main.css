@@ -20,7 +20,6 @@
 	font-weight: bold;
 }
 
-<<<<<<< HEAD
 .tasks-table-body {
 	margin-top: 50px;
 }
@@ -43,13 +42,4 @@
 .toolbar-btn {
 	-webkit-appearance: initial !important;
 	margin-right: 1px;
-=======
-.table-header {
-	margin-top: 60px;
-	opacity: 0.5;
-}
-
-.table-body {
-	margin-top: 155px;
->>>>>>> branch 'master' of https://github.com/zan-od/tasks
 }

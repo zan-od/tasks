@@ -96,7 +96,7 @@ public class TaskController {
 	}
 	
 	@PostMapping({"/task/add", "/task/edit/{taskId}"})
-    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id")  Long clientId) {
+    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id") Long clientId) {
 		
 		//System.out.println("task id: " + task.getId());
 		task.setBoard(getCurrentBoard());

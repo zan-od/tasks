@@ -22,4 +22,3 @@
 hs_err_pid*
 /target/
 /tasksdb.trace.db
-/tasksdb.mv.db
