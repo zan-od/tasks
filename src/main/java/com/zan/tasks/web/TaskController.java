@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Task;
+import com.zan.tasks.model.TaskStatus;
 import com.zan.tasks.model.User;
 import com.zan.tasks.service.BoardService;
 import com.zan.tasks.service.ClientService;
@@ -43,12 +45,17 @@ public class TaskController {
 	
 	@GetMapping("/tasks")
     public String tasks(Model model) {
+		return tasksByStatus(model, TaskStatus.IN_PROGRESS);
+    }
+	
+	@GetMapping(value = "/tasks", params = {"status"})
+    public String tasksByStatus(Model model, @RequestParam(value = "status") TaskStatus status) {
         
 		User currentUser = userService.getCurrentUser();
 		Board currentBoard = currentUser.getCurrentBoard();
 		TasksView tasksView = new TasksView();
 		
-		List<Task> tasks = (List<Task>) taskService.listBoardTasks(currentBoard);
+		List<Task> tasks = (List<Task>) taskService.listBoardTasks(currentBoard, status);
 		for (Task task : tasks) {
 			task.setStarted(taskService.isTaskStarted(task, currentUser));
 			task.setDuration(taskService.getTaskDuration(task, currentUser));
@@ -56,6 +63,9 @@ public class TaskController {
 			tasksView.addTask(task);
 		}
 		
+		model.addAttribute("currentStatus", status);
+		model.addAttribute("taskStatuses", taskService.getAllTaskStatuses());
+		model.addAttribute("nextTaskStatuses", taskService.getTaskStatusesToChange(status));
 		model.addAttribute("boards", boardService.getBoards(currentUser));
 		model.addAttribute("currentBoard", currentBoard);
 		
@@ -86,7 +96,7 @@ public class TaskController {
 	}
 	
 	@PostMapping({"/task/add", "/task/edit/{taskId}"})
-    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id")  Long clientId) {
+    public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id") Long clientId) {
 		
 		//System.out.println("task id: " + task.getId());
 		task.setBoard(getCurrentBoard());

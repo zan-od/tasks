@@ -21,63 +21,66 @@
 <!-- 	<th:block th:replace="${scripts}" /> -->
 </head>
 <body>
-	<header class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary mb-2 nav-pills nav-fill" th:fragment="menu(boards, currentBoard)">
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-        			<a class="nav-link" href="/">Home</a>
-      			</li>
-      			<li class="nav-item dropdown" sec:authorize="isAuthenticated()" th:if="boards!=null">
-      				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      				Boards
-      				</a>
-      				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      					<a class="dropdown-item"  th:each="board: ${boards}" th:text="${board.name}" th:href="@{/board/{boardId}(boardId=${board.id})}">Board name</a>
-      					<div class="dropdown-divider"></div>
-      					<a class="dropdown-item" href="board/add">* New board *</a>
-      				</div>
-      			</li>
-				<li class="nav-item" sec:authorize="isAuthenticated()">
-        			<a class="nav-link" href="/tasks">Tasks</a>
-      			</li>
-				<li class="nav-item" sec:authorize="isAuthenticated()">
-        			<a class="nav-link" href="/invoices">Invoices</a>
-      			</li>
-				<li class="nav-item" sec:authorize="isAuthenticated()">
-        			<a class="nav-link" href="/clients">Clients</a>
-      			</li>
-      			<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-      				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      				Reports
-      				</a>
-      				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      					<a class="dropdown-item" href="/clients">Statistic</a>
-      					<a class="dropdown-item" href="#">Another action</a>
-      				</div>
-      			</li>
-			</ul>
-			
-			<div class="float-right navbar-dark bg-primary">
-				<ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+	<div class="fixed-top fixed-header" th:fragment="menu(boards, currentBoard)">
+		<header class="navbar fixed-top1 navbar-expand-lg navbar-dark bg-primary mb-2 nav-pills nav-fill" th:fragment="menu1(boards, currentBoard)">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="/user-info" th:text="${#authentication.name}">User</a>
+	        			<a class="nav-link" href="/">Home</a>
 	      			</li>
-	      			<span class="navbar-text">|</span>
-					<li class="nav-item">
-						<a class="nav-link" href="/logout">Logout</a>
+	      			<li class="nav-item dropdown" sec:authorize="isAuthenticated()" th:if="boards!=null">
+	      				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      				Boards
+	      				</a>
+	      				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	      					<a class="dropdown-item"  th:each="board: ${boards}" th:text="${board.name}" th:href="@{/board/{boardId}(boardId=${board.id})}">Board name</a>
+	      					<div class="dropdown-divider"></div>
+	      					<a class="dropdown-item" href="board/add">* New board *</a>
+	      				</div>
+	      			</li>
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+	        			<a class="nav-link" href="/tasks">Tasks</a>
+	      			</li>
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+	        			<a class="nav-link" href="/invoices">Invoices</a>
+	      			</li>
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+	        			<a class="nav-link" href="/clients">Clients</a>
+	      			</li>
+	      			<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+	      				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      				Reports
+	      				</a>
+	      				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	      					<a class="dropdown-item" href="/clients">Statistic</a>
+	      					<a class="dropdown-item" href="#">Another action</a>
+	      				</div>
 	      			</li>
 				</ul>
-				<ul class="navbar-nav mr-auto" sec:authorize="!isAuthenticated()">
-					<li class="nav-item">
-						<a class="nav-link" href="/login">Login</a>
-	      			</li>
-	      			<span class="navbar-text">|</span>
-					<li class="nav-item">
-						<a class="nav-link" href="/registration">Register</a>
-	      			</li>
-				</ul>
+				
+				<div class="float-right navbar-dark bg-primary">
+					<ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+						<li class="nav-item">
+							<a class="nav-link" href="/user-info" th:text="${#authentication.name}">User</a>
+		      			</li>
+		      			<span class="navbar-text">|</span>
+						<li class="nav-item">
+							<a class="nav-link" href="/logout">Logout</a>
+		      			</li>
+					</ul>
+					<ul class="navbar-nav mr-auto" sec:authorize="!isAuthenticated()">
+						<li class="nav-item">
+							<a class="nav-link" href="/login">Login</a>
+		      			</li>
+		      			<span class="navbar-text">|</span>
+						<li class="nav-item">
+							<a class="nav-link" href="/registration">Register</a>
+		      			</li>
+					</ul>
+				</div>
 			</div>
-		</div>
-	</header>
+		</header>
+		<div th:include="this :: header2"></div>
+	</div>
 </body>
 </html>

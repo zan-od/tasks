@@ -11,6 +11,7 @@ import com.zan.tasks.dao.TaskDAO;
 import com.zan.tasks.dao.TimeIntervalDAO;
 import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Task;
+import com.zan.tasks.model.TaskStatus;
 import com.zan.tasks.model.TimeInterval;
 import com.zan.tasks.model.User;
 
@@ -41,6 +42,11 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<Task> listBoardTasks(Board board) {
 		return taskDAO.findByBoard(board);
+	}
+	
+	@Override
+	public List<Task> listBoardTasks(Board board, TaskStatus status) {
+		return taskDAO.findByBoardAndStatus(board, status);
 	}
 	
 	@Override
@@ -123,5 +129,43 @@ public class TaskServiceImpl implements TaskService {
 		}
 		
 		return taskDuration;
+	}
+
+	@Override
+	public List<TaskStatus> getAllTaskStatuses() {
+		List<TaskStatus> list = new ArrayList<>();
+		
+		list.add(TaskStatus.NEW);
+		list.add(TaskStatus.IN_PROGRESS);
+		list.add(TaskStatus.PAUSED);
+		list.add(TaskStatus.COMPLETED);
+		list.add(TaskStatus.CANCELED);
+		
+		return list;
+	}
+
+	@Override
+	public List<TaskStatus> getTaskStatusesToChange(TaskStatus status) {
+		List<TaskStatus> list = new ArrayList<>();
+		
+		if (status == TaskStatus.NEW) {
+			list.add(TaskStatus.IN_PROGRESS);
+			list.add(TaskStatus.PAUSED);
+			list.add(TaskStatus.COMPLETED);
+			list.add(TaskStatus.CANCELED);
+		} else if (status == TaskStatus.IN_PROGRESS) {
+			list.add(TaskStatus.COMPLETED);
+			list.add(TaskStatus.PAUSED);
+			list.add(TaskStatus.CANCELED);
+		} else if (status == TaskStatus.PAUSED) {
+			list.add(TaskStatus.IN_PROGRESS);
+			list.add(TaskStatus.CANCELED);
+		} else if (status == TaskStatus.COMPLETED) {
+			list.add(TaskStatus.IN_PROGRESS);
+		} else if (status == TaskStatus.CANCELED) {
+			list.add(TaskStatus.IN_PROGRESS);
+		}
+		
+		return list;
 	}
 }

@@ -20,11 +20,26 @@
 	font-weight: bold;
 }
 
-.table-header {
-	margin-top: 60px;
-	opacity: 0.5;
+.tasks-table-body {
+	margin-top: 50px;
 }
 
-.table-body {
-	margin-top: 155px;
+.fixed-header {
+	background-color:#fff;
+}
+
+.board-name {
+	border: 1px solid #007bff;
+	border-radius: 10px;
+	color: brown;
+	padding-left: 5px;
+}
+
+.standard-page-container {
+	margin-top: 85px;
+}
+
+.toolbar-btn {
+	-webkit-appearance: initial !important;
+	margin-right: 1px;
 }

@@ -7,7 +7,7 @@
 	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
 		Navigation bar
 	</nav>
-	<div class="container-fluid">
+	<div class="container-fluid standard-page-container">
 		<h1 th:text="${currentBoard.name}">Board</h1>
 		<br></br>
 		<h2 th:text="${task.id} != null ? 'Edit task' : 'Add task'">Edit task</h2>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Task;
+import com.zan.tasks.model.TaskStatus;
 import com.zan.tasks.model.TimeInterval;
 import com.zan.tasks.model.User;
 
@@ -13,6 +14,8 @@ public interface TaskService {
 	public List<Task> listTasks();
 	
 	public List<Task> listBoardTasks(Board board);
+	
+	public List<Task> listBoardTasks(Board board, TaskStatus status);
 
 	public Task getTask(Long id);
 	
@@ -29,4 +32,8 @@ public interface TaskService {
 	public TimeInterval getStartedByUserInterval(Task task, User user);
 	
 	public Integer getTaskDuration(Task task, User user);
+	
+	public List<TaskStatus> getAllTaskStatuses();
+	
+	public List<TaskStatus> getTaskStatusesToChange(TaskStatus status);
 }
