@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class TimeInterval {
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH)

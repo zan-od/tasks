@@ -26,8 +26,8 @@ name varchar(100) not null
 
 );
 
-insert into roles (id, name) values (1, 'admin');
-insert into roles (id, name) values (2, 'user');
+insert into roles (id, name) values (1, 'ROLE_ADMIN');
+insert into roles (id, name) values (2, 'ROLE_USER');
 
 create table user_roles(
 

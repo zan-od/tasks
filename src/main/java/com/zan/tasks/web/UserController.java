@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.zan.tasks.model.Board;
 import com.zan.tasks.model.User;
 import com.zan.tasks.service.BoardService;
 import com.zan.tasks.service.SecurityService;
@@ -52,6 +53,11 @@ public class UserController {
 		}
 		
 		userService.save(userForm);
+		
+		Board board = new Board();
+		board.setName("My board");
+		boardService.addBoard(board, userForm);
+		
 		securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
         
 		return "redirect:tasks";

@@ -60,4 +60,12 @@ public class UserServiceImpl implements UserService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return findByUsername(auth.getName());
 	}
+
+	@Override
+	public void addBoard(User user, Board board) {
+		Set<Board> boards = new HashSet<>();
+		boards.add(board);
+		user.setBoards(boards);
+		userDAO.save(user);
+	}
 }

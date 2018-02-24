@@ -10,6 +10,8 @@ public interface UserService {
 	
 	User findByUsername(String username);
 	
+	void addBoard(User user, Board board);
+	
 	void setCurrentBoard(User user, Board board);
 	
 	Set<Board> getBoards(User user);
