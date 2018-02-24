@@ -1,6 +1,14 @@
+create table boards(
+
+id SERIAL primary key,
+
+name varchar(255) not null
+
+);
+
 create table users(
 
-id integer not null SERIAL primary key,
+id SERIAL primary key,
 
 username varchar(255) not null,
 password varchar(255) not null,
@@ -13,13 +21,13 @@ foreign key (board_id) references boards(id)
 
 create table roles(
 
-id integer not null SERIAL primary key,
+id SERIAL primary key,
 name varchar(100) not null
 
 );
 
-insert into roles (id, name) values (1, 'admin');
-insert into roles (id, name) values (2, 'user');
+insert into roles (id, name) values (1, 'ROLE_ADMIN');
+insert into roles (id, name) values (2, 'ROLE_USER');
 
 create table user_roles(
 
@@ -30,14 +38,6 @@ foreign key (user_id) references users(id),
 foreign key (role_id) references roles(id),
 
 unique(user_id, role_id)
-
-);
-
-create table boards(
-
-id integer not null SERIAL primary key,
-
-name varchar(255) not null
 
 );
 
@@ -55,14 +55,14 @@ unique(board_id, user_id)
 
 create table clients(
 
-id integer not null SERIAL primary key,
+id SERIAL primary key,
 name varchar not null default ''
 
 );
 
 create table tasks(
 
-id integer not null SERIAL primary key,
+id SERIAL primary key,
 name varchar not null,
 board_id integer,
 client_id integer,
@@ -75,7 +75,7 @@ duration integer not null default 0
 
 create table time_intervals(
 
-id integer not null SERIAL primary key,
+id SERIAL primary key,
 task_id integer not null,
 performer_id integer not null,
 start_time timestamp not null,

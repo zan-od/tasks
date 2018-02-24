@@ -101,6 +101,9 @@ public class TaskController {
 		//System.out.println("task id: " + task.getId());
 		task.setBoard(getCurrentBoard());
 		task.setClient(clientService.getClient(clientId));
+		if (task.getId() == null){
+			task.setStatus(TaskStatus.NEW);
+		}
 		taskService.saveTask(task);
         
 		return "redirect:/tasks";
