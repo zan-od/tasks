@@ -1,5 +1,6 @@
 package com.zan.tasks.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +133,24 @@ public class TaskController {
 		Task task = taskService.getTask(taskId);
 		taskService.stopTask(task, userService.getCurrentUser());
         
+		return "redirect:/tasks";
+    }
+	
+	@PostMapping("/task/set_status/")
+    public String setTasksStatus(@ModelAttribute("status") TaskStatus status, @ModelAttribute("selectedTasks") String tasksIdsString /*Long[] tasksIds*/) {
+		
+		//System.out.println(status);
+		//System.out.println(tasksIdsString);
+        
+		String[] tasksIds = tasksIdsString.split(",");
+		List<Task> tasks = new ArrayList<>();
+		for (int i = 0; i < tasksIds.length; i++) {
+			Task task = taskService.getTask(Long.parseLong(tasksIds[i]));
+			tasks.add(task);
+		}
+		
+		taskService.SetTasksStatus(tasks, status);
+		
 		return "redirect:/tasks";
     }
 }

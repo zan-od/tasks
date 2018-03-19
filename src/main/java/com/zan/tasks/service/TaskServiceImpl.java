@@ -168,4 +168,12 @@ public class TaskServiceImpl implements TaskService {
 		
 		return list;
 	}
+
+	@Override
+	public void SetTasksStatus(List<Task> tasks, TaskStatus status) {
+		for (Task task : tasks) {
+			task.setStatus(status);
+			taskDAO.save(task);
+		}
+	}
 }

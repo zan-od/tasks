@@ -36,4 +36,6 @@ public interface TaskService {
 	public List<TaskStatus> getAllTaskStatuses();
 	
 	public List<TaskStatus> getTaskStatusesToChange(TaskStatus status);
+	
+	public void SetTasksStatus(List<Task> tasks, TaskStatus status);
 }
