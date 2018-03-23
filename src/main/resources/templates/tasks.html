@@ -82,12 +82,12 @@
 							<td class="task-name">
 								<a th:text="${task.getName()}" th:href="@{/task/edit/{taskId}(taskId=${task.id})}">Edit task</a>
 							</td>
-							<td class="task-duration" th:text="${durationFormatter.formatDuration(task.duration)}">duration</td>
+							<td class="task-duration" th:id = "|duration_${task.id}|" th:classappend="${task.isStarted()} ? task-started-duration" th:text="${durationFormatter.formatDuration(task.duration)}">duration</td>
 	<!-- 						<td><a class="btn btn-danger btn-sm" th:href="@{/task/delete/{taskId}(taskId=${task.id})}">delete</a></td> -->
 							<td class="task-started-icon">
 								<img alt="task started" src="/pictures/timer.gif" th:if="${task.isStarted()}"></img>
 							</td>
-							<td class="task-button">
+							<td class="task-button" th:if="${currentStatusInProgress}">
 								<a class="btn btn-primary btn-sm" th:if="${!task.isStarted()}" th:href="@{/task/start/{taskId}(taskId=${task.id})}">Start</a>
 								<a class="btn btn-warning btn-sm" th:if="${task.isStarted()}" th:href="@{/task/stop/{taskId}(taskId=${task.id})}">Stop</a>
 							</td>
@@ -114,6 +114,23 @@
 			return true;
 		}
 	    /*]]>*/
+	    
+	    jQuery(document).ready(function(){
+		   start_duration_timer();
+		});
+	    
+	    function start_duration_timer(){
+	        setInterval(function(){
+	        	$(".task-started-duration").each(function(i){
+	        		var id = $(this).prop("id").replace("duration_", "");
+	        		$.get("getTaskDuration", {id: id}, function(data) { // get from controller
+		        		//$("#duration_"+id).replaceWith(data); // update snippet of page
+		        		$("#duration_"+id).html(data);
+		            });
+		        });
+	        }, 
+	        60*1000);
+	    };
 	</script>
 <!-- 	<script type="text/javascript"> -->
 <!-- // 		$(document).ready(function (){ -->

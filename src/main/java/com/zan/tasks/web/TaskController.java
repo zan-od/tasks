@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Task;
@@ -64,6 +65,7 @@ public class TaskController {
 			tasksView.addTask(task);
 		}
 		
+		model.addAttribute("currentStatusInProgress", status == TaskStatus.IN_PROGRESS);
 		model.addAttribute("currentStatus", status);
 		model.addAttribute("taskStatuses", taskService.getAllTaskStatuses());
 		model.addAttribute("nextTaskStatuses", taskService.getTaskStatusesToChange(status));
@@ -75,6 +77,15 @@ public class TaskController {
 		model.addAttribute("durationFormatter", durationFormatter);
 		
 		return "tasks";
+    }
+	
+	@GetMapping(value = "/getTaskDuration", params = {"id"})
+    public @ResponseBody String getTaskDuration(@RequestParam(value = "id") Long taskId) {
+        
+		Task task = taskService.getTask(taskId);
+		User currentUser = userService.getCurrentUser();
+		
+	    return durationFormatter.formatDuration(taskService.getTaskDuration(task, currentUser));
     }
 	
 	@GetMapping("/task/add")
@@ -107,7 +118,7 @@ public class TaskController {
 		}
 		taskService.saveTask(task);
         
-		return "redirect:/tasks";
+		return "redirect:/tasks?status="+task.getStatus();
     }
 	
 	@GetMapping("/task/delete/{taskId}")
@@ -124,7 +135,7 @@ public class TaskController {
 		Task task = taskService.getTask(taskId);
 		taskService.startTask(task, userService.getCurrentUser());
         
-		return "redirect:/tasks";
+		return "redirect:/tasks?status="+task.getStatus();
     }
 	
 	@GetMapping("/task/stop/{taskId}")
@@ -133,7 +144,7 @@ public class TaskController {
 		Task task = taskService.getTask(taskId);
 		taskService.stopTask(task, userService.getCurrentUser());
         
-		return "redirect:/tasks";
+		return "redirect:/tasks?status="+task.getStatus();
     }
 	
 	@PostMapping("/task/set_status/")
