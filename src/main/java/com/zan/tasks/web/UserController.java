@@ -96,7 +96,7 @@ public class UserController {
  		
 		securityService.autoLogin("demo", "demo");
 		
-		return "redirect:";
+		return "redirect:/tasks";
     }
 	
 	@GetMapping("/admin")
