@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Import tasks from web2py')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container standard-page-container">
+		<div class="row justify-content-md-center">
+		<div class="col-6">
+		
+		<form th:action="@{/tasks/import/web2py/}" method="post">
+			<div class="form-group">
+				<input type="text" name="url" th:value="${url}" class="form-control" placeholder="URL" autofocus="autofocus"/>
+			</div>
+			<div class="form-group">
+				<input type="text" name="username" class="form-control" placeholder="Username"/>
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" class="form-control" placeholder="Password"/>
+			</div>
+			<div class="form-group">
+<!-- 				<input type="text" name="board" class="form-control" placeholder="Board"/> -->
+				<select name="board" class="form-control">
+					<th:block th:each="board: ${boards}">
+						<option th:value="${board.id}" th:text="${board.name}">Board</option>
+					</th:block>
+				</select>
+			</div>
+			
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Import tasks</button>
+		</form>
+		
+		</div>
+		</div>
+	</div>
+</body>
+</html>

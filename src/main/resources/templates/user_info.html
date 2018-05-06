@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('User Info')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container standard-page-container">
+		<div class="row justify-content-md-center">
+		<div class="col-6">
+		
+			<h1 th:text="${#authentication.name}">User name</h1>
+			<a type="button" class="btn btn-sm btn-secondary toolbar-btn" th:href="@{/tasks/import/web2py/}">Import tasks from web2py</a>
+		
+		</div>
+		</div>
+	</div>
+</body>
+</html>

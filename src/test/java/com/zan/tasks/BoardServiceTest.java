@@ -1,22 +1,17 @@
 package com.zan.tasks;
 
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.zan.tasks.dao.BoardDAO;
-import com.zan.tasks.dao.UserDAO;
 import com.zan.tasks.model.Board;
 import com.zan.tasks.model.User;
 import com.zan.tasks.service.BoardService;
@@ -33,6 +28,10 @@ public class BoardServiceTest {
 //    @InjectMocks
     @Autowired
     private BoardService boardService;
+    
+    @Mock
+    BoardDAO mockedBoardDAO;
+    
 //     
 //     
 //    @Before
@@ -44,7 +43,7 @@ public class BoardServiceTest {
 	public void testAddBoard(){
 		//when(boardDaoMock.save(any(Board.class))).thenReturn(Long.valueOf(1));
 		
-		BoardDAO mockedBoardDAO = mock(BoardDAO.class);
+		//BoardDAO mockedBoardDAO = mock(BoardDAO.class);
 		UserService mockedUserService = mock(UserService.class);
 		Board mockedBoard = mock(Board.class);
 		User mockedUser = mock(User.class);
@@ -57,4 +56,17 @@ public class BoardServiceTest {
 		verify(mockedUserService, times(1)).setCurrentBoard(mockedUser, mockedBoard);
 	}
 
+	@Test
+	public void testGetBoard(){
+		//when(boardDaoMock.save(any(Board.class))).thenReturn(Long.valueOf(1));
+		
+		BoardDAO mockedBoardDAO = mock(BoardDAO.class);
+		UserService mockedUserService = mock(UserService.class);
+		
+		BoardService boardService = new BoardServiceImpl(mockedBoardDAO, mockedUserService);
+		
+		//Board board = boardService.addBoard(mockedBoard, mockedUser);
+		//verify(mockedBoardDAO, times(1)).save(mockedBoard);
+		//verify(mockedUserService, times(1)).setCurrentBoard(mockedUser, mockedBoard);
+	}
 }
