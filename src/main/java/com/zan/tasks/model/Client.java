@@ -8,8 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "CLIENTS")
@@ -22,6 +26,11 @@ public class Client {
 	@Column(name = "NAME")
 	private String name = "";
 
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "BOARD_ID")
+	private Board board;
+	
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Collection<Task> tasks;
 	
@@ -39,5 +48,13 @@ public class Client {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 }

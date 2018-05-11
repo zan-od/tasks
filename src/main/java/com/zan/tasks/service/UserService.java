@@ -17,4 +17,6 @@ public interface UserService {
 	Set<Board> getBoards(User user);
 	
 	User getCurrentUser();
+	
+	Board getCurrentBoard();
 }

@@ -18,13 +18,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zan.tasks.model.Client;
 import com.zan.tasks.service.ClientService;
+import com.zan.tasks.service.UserService;
 
 @Controller
 public class ClientController {
 	
-	@Autowired
 	private ClientService clientService;
+	private UserService userService;
 
+	@Autowired
+	public void setClientService(ClientService clientService){
+		this.clientService = clientService;
+	}
+	
+	@Autowired
+	public void setUserService(UserService userService){
+		this.userService = userService;
+	}
+	
 	@GetMapping("/clients")
     public String tasks(Model model) {
         
@@ -34,7 +45,7 @@ public class ClientController {
 		model.addAttribute("columns", columns);
 		model.addAttribute("new_client", new Client());
 		
-		List<Client> clients = (List<Client>) clientService.listClients();
+		List<Client> clients = (List<Client>) clientService.listBoardClients(userService.getCurrentBoard());
 		model.addAttribute("clients", clients);
         
 		return "clients";
@@ -61,7 +72,7 @@ public class ClientController {
 	List<Client> searchClient(@RequestParam String query) {
 
 		//System.out.println(query);
-		List<Client> clients = clientService.findClientsByName(query);
+		List<Client> clients = clientService.findBoardClientsByName(userService.getCurrentBoard(), query);
 		
 		return clients;
 	}

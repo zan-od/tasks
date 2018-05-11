@@ -52,10 +52,6 @@ public class TaskController {
 	}
 	
 	
-	private Board getCurrentBoard(){
-		return userService.getCurrentUser().getCurrentBoard();
- 	}
-	
 	@GetMapping("/tasks")
     public String tasks(Model model) {
 		return tasksByStatus(model, TaskStatus.IN_PROGRESS);
@@ -103,7 +99,7 @@ public class TaskController {
     public String addTask(Model model) {
 		Task newTask = new Task();
 		model.addAttribute("task", newTask);
-		model.addAttribute("currentBoard", getCurrentBoard());
+		model.addAttribute("currentBoard", userService.getCurrentBoard());
 		
 		return "task";
 	}
@@ -112,7 +108,7 @@ public class TaskController {
 	public String editTask(Model model, @PathVariable("taskId") Long taskId) {
 		Task newTask = taskService.getTask(taskId);
 		model.addAttribute("task", newTask);
-		model.addAttribute("currentBoard", getCurrentBoard());
+		model.addAttribute("currentBoard", userService.getCurrentBoard());
 		model.addAttribute("client_id", newTask.getClient() == null ? 0 : newTask.getClient().getId());
 		
 		return "task";
@@ -122,7 +118,7 @@ public class TaskController {
     public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id") Long clientId) {
 		
 		//System.out.println("task id: " + task.getId());
-		task.setBoard(getCurrentBoard());
+		task.setBoard(userService.getCurrentBoard());
 		task.setClient(clientService.getClient(clientId));
 		if (task.getId() == null){
 			task.setStatus(TaskStatus.NEW);

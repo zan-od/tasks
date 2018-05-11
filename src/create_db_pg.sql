@@ -56,7 +56,8 @@ unique(board_id, user_id)
 create table clients(
 
 id SERIAL primary key,
-name varchar not null default ''
+name varchar not null default '',
+board_id integer not null
 
 );
 
@@ -64,9 +65,9 @@ create table tasks(
 
 id SERIAL primary key,
 name varchar not null,
-board_id integer,
-client_id integer,
-status smallint,
+board_id integer not null,
+client_id integer not null,
+status smallint not null,
 started boolean not null default false,
 closed boolean not null default false,
 duration integer not null default 0

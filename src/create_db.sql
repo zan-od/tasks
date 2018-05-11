@@ -56,6 +56,7 @@ unique(board_id, user_id)
 create table clients(
 
 id integer not null auto_increment primary key,
+board_id integer not null,
 name varchar not null default ''
 
 );
@@ -64,9 +65,9 @@ create table tasks(
 
 id integer not null auto_increment primary key,
 name varchar not null,
-board_id integer,
-client_id integer,
-status smallint,
+board_id integer not null,
+client_id integer not null,
+status smallint not null,
 started boolean not null default false,
 closed boolean not null default false,
 duration integer not null default 0
