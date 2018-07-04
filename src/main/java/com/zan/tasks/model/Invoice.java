@@ -3,6 +3,7 @@ package com.zan.tasks.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="INVOICES")
@@ -27,6 +30,7 @@ public class Invoice {
 	private String number;
 	
 	@Column(name="DATE")
+	@DateTimeFormat(pattern ="dd.MM.yyyy HH:mm")
 	private Date date;
 	
 	@ManyToOne
@@ -37,7 +41,7 @@ public class Invoice {
 	@JoinColumn(name="BOARD_ID")
 	private Board board;
 	
-	@OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = InvoiceItem.class)
 	private List<InvoiceItem> items;
 
 	@Column(name="CLOSED")

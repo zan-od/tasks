@@ -87,3 +87,32 @@ foreign key (task_id) references tasks(id),
 foreign key (performer_id) references users(id)
 
 );
+
+create table invoices(
+
+id SERIAL primary key,
+number varchar not null,
+date timestamp not null,
+board_id integer not null,
+client_id integer not null,
+closed boolean not null default false,
+
+foreign key (board_id) references boards(id),
+foreign key (client_id) references clients(id)
+
+);
+
+create table invoice_items(
+
+id SERIAL primary key,
+description varchar not null,
+invoice_id integer not null,
+task_id integer,
+quantity numeric(15,2) not null,
+price numeric(15,2) not null,
+amount numeric(15,2) not null,
+
+foreign key (invoice_id) references invoices(id),
+foreign key (task_id) references tasks(id)
+
+);

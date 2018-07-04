@@ -51,9 +51,13 @@
 	
 	<div class="container standard-page-container">
 		<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content justify-content-center">
+			<div class="btn-toolbar table-head" role="toolbar" aria-label="Invoices toolbar">
+				<a type="button" class="btn btn-sm btn-primary toolbar-btn" href="/invoice/add">New invoice</a>
+			</div>
 			<table class="table table-sm table-hover">
 				<thead>
 					<tr>
+						<td></td>
 						<td>Number</td>
 						<td>Date</td>
 						<td>Client</td>
@@ -62,6 +66,12 @@
 				</thead>
 				<tbody>
 					<tr th:each="invoice: ${invoices}">
+						<td>
+							<a th:href="@{/invoice/edit/{invoiceId}(invoiceId=${invoice.id})}">
+							<img alt="invoice" src="/pictures/invoice.png">
+							</img>
+							</a>
+						</td>
 						<td>
 							<a th:text="${invoice.number}" th:href="@{/invoice/edit/{invoiceId}(invoiceId=${invoice.id})}">Number</a>
 						</td>

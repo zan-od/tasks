@@ -1,5 +1,6 @@
 package com.zan.tasks.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,9 +22,9 @@ public class InvoiceItem {
 	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@ManyToOne
+	@ManyToOne(optional = false, cascade = CascadeType.DETACH)
 	@JoinColumn(name="INVOICE_ID")
-	private Task invoice;
+	private Invoice invoice;
 	
 	@ManyToOne
 	@JoinColumn(name="TASK_ID")
@@ -54,11 +55,11 @@ public class InvoiceItem {
 		this.description = description;
 	}
 
-	public Task getInvoice() {
+	public Invoice getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(Task invoice) {
+	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
 
