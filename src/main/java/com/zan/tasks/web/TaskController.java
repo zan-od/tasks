@@ -2,13 +2,19 @@ package com.zan.tasks.web;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Task;
 import com.zan.tasks.model.TaskStatus;
+import com.zan.tasks.model.TimeInterval;
 import com.zan.tasks.model.User;
 import com.zan.tasks.service.BoardService;
 import com.zan.tasks.service.ClientService;
@@ -100,6 +107,7 @@ public class TaskController {
 		Task newTask = new Task();
 		model.addAttribute("task", newTask);
 		model.addAttribute("currentBoard", userService.getCurrentBoard());
+		model.addAttribute("durationFormatter", durationFormatter);
 		
 		return "task";
 	}
@@ -110,6 +118,7 @@ public class TaskController {
 		model.addAttribute("task", newTask);
 		model.addAttribute("currentBoard", userService.getCurrentBoard());
 		model.addAttribute("client_id", newTask.getClient() == null ? 0 : newTask.getClient().getId());
+		model.addAttribute("durationFormatter", durationFormatter);
 		
 		return "task";
 	}
@@ -172,6 +181,45 @@ public class TaskController {
 		return "redirect:/tasks";
     }
 	
+	@GetMapping("/timeInterval/{timeIntervalId}")
+	public String editTimeInterval(Model model, @PathVariable("timeIntervalId") Long timeIntervalId) {
+		
+		TimeInterval timeInterval = timeIntervalId == null ? new TimeInterval() : taskService.getTimeInterval(timeIntervalId);
+		model.addAttribute("timeInterval", timeInterval);
+		model.addAttribute("currentBoard", userService.getCurrentBoard());
+		
+		return "time_interval";
+	}
+	
+	@PostMapping("/timeInterval/{timeIntervalId}")
+    public String saveTimeInterval(@ModelAttribute("timeInterval") TimeInterval timeInterval, BindingResult userloginResult) {
+		
+		/*task.setBoard(userService.getCurrentBoard());
+		task.setClient(clientService.getClient(clientId));
+		if (task.getId() == null){
+			task.setStatus(TaskStatus.NEW);
+		}*/
+		
+		taskService.saveTimeInterval(timeInterval);
+        
+		return "redirect:/task/edit/"+timeInterval.getTask().getId();
+    }
+	
+	@ModelAttribute("dateFormat")
+	public String dateFormat() {
+	    return "yyyy-MM-dd'T'HH:mm:ss";
+	}
+	
+	@InitBinder
+	private void dateBinder(WebDataBinder binder) {
+	    //The date format to parse or output your dates
+	    SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormat());
+	    //Create a new CustomDateEditor
+	    CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+	    //Register it as custom editor for the Date type
+	    binder.registerCustomEditor(Date.class, editor);
+	}
+	
 	@GetMapping("/tasks/import/web2py/")
     public String openImportPageWeb2Py(Model model) {
 		
@@ -193,6 +241,5 @@ public class TaskController {
 		}
 		
 		return "redirect:/tasks";
-	}
-	
+	}	
 }

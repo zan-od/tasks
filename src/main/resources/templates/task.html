@@ -26,23 +26,25 @@
 		
 		<br></br>
 		<table class="table">
-<!-- 			<thead> -->
-<!-- 				<tr> -->
-<!-- 					<th th:text="${columns.get('name')}"></th> -->
-<!-- 					<th th:text="${columns.get('duration')}"></th> -->
-<!-- 					<th></th> -->
-<!-- 					<th/> -->
-<!-- 				</tr> -->
-<!-- 			</thead> -->
+			<thead>
+				<tr>
+					<th th:text="Id">Id</th>
+					<th th:text="User">User</th>
+					<th th:text="From">From</th>
+					<th th:text="To">To</th>
+					<th th:text="Duration">Duration</th>
+					<th/>
+				</tr>
+			</thead>
 			<tbody>
 				<tr th:each="timeInterval: ${task.timeIntervals}">
+					<td>
+						<a th:href="@{/timeInterval/{timeIntervalId}(timeIntervalId=${timeInterval.id})}" th:text="${timeInterval.id}">id</a>
+					</td>
 					<td th:text="${timeInterval.performer.name}">user</td>
-					<td th:text="${timeInterval.duration}">duration</td>
-<!-- 					<td><a class="btn btn-danger btn-sm" th:href="@{/task/delete/{taskId}(taskId=${task.id})}">delete</a></td> -->
-<!-- 					<td> -->
-<!-- 						<a class="btn btn-primary btn-sm" th:if="${!task.isStarted()}" th:href="@{/task/start/{taskId}(taskId=${task.id})}">Start</a> -->
-<!-- 						<a class="btn btn-warning btn-sm" th:if="${task.isStarted()}" th:href="@{/task/stop/{taskId}(taskId=${task.id})}">Stop</a> -->
-<!-- 					</td> -->
+					<td th:text="${timeInterval.startTime}">from</td>
+					<td th:text="${timeInterval.stopTime}">to</td>
+					<td th:text="${durationFormatter.formatDuration(timeInterval.duration)}">duration</td>
 				</tr>
 			</tbody>
 		</table>

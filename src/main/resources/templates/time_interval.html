@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Time interval')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<nav th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</nav>
+	<div class="container-fluid standard-page-container">
+		<h2 th:text="${timeInterval.id} != null ? 'Edit time interval' : 'Add time interval'">Edit time interval</h2>
+		<br></br>
+		<form th:action="@{/timeInterval/{timeIntervalId}(timeIntervalId=${timeInterval.id})}" th:object="${timeInterval}" method="post">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="form-group">
+				<input type="text" th:field="*{performer}" class="form-control"/>
+			</div>
+			<div class="form-group">
+				<input type="text" th:field="*{task}" class="form-control"/>
+			</div>
+			<div class="form-group">
+				<input type="datetime-local" id="startTime" name="startTime" th:value="${#dates.format(timeInterval.startTime, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                       max="3000-12-31 00:00:00" min="2000-01-01 00:00:00" class="form-control"/>
+			</div>
+			<div class="form-group">
+				<input type="datetime-local" id="stopTime" name="stopTime" th:value="${#dates.format(timeInterval.stopTime, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                       max="3000-12-31 00:00:00" min="2000-01-01 00:00:00" class="form-control"/>
+			</div>
+			<input type="submit" value="Save"/>
+		</form>
+	</div>
+</body>
+</html>

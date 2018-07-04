@@ -38,4 +38,8 @@ public interface TaskService {
 	public List<TaskStatus> getTaskStatusesToChange(TaskStatus status);
 	
 	public void SetTasksStatus(List<Task> tasks, TaskStatus status);
+	
+	public TimeInterval getTimeInterval(Long id);
+	
+	public void saveTimeInterval(TimeInterval timeInterval);
 }

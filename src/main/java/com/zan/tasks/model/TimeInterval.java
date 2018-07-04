@@ -45,7 +45,7 @@ public class TimeInterval {
 		}
 	}
 	
-	private void updateDuration(){
+	public void updateDuration(){
 		duration = getIntervalDuration(startTime, stopTime);
 	}
 	

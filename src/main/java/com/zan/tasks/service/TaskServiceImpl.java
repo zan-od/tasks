@@ -176,4 +176,15 @@ public class TaskServiceImpl implements TaskService {
 			taskDAO.save(task);
 		}
 	}
+
+	@Override
+	public TimeInterval getTimeInterval(Long id) {
+		return timeIntervalDAO.getOne(id);
+	}
+
+	@Override
+	public void saveTimeInterval(TimeInterval timeInterval) {
+		timeInterval.updateDuration();
+		timeIntervalDAO.save(timeInterval);
+	}
 }
