@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zan.tasks.dao.ClientDAO;
+import com.zan.tasks.model.Board;
 import com.zan.tasks.model.Client;
 
 @Service
@@ -20,8 +21,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<Client> listClients() {
-		return clientDAO.findAll();
+	public List<Client> listBoardClients(Board board) {
+		return clientDAO.findByBoard(board);
 	}
 
 	@Override
@@ -30,8 +31,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<Client> findClientsByName(String name) {
-		return clientDAO.findByNameContainingIgnoreCase(name);
+	public List<Client> findBoardClientsByName(Board board, String name) {
+		return clientDAO.findByBoardAndNameContainingIgnoreCase(board, name);
 	}
 
 	@Override

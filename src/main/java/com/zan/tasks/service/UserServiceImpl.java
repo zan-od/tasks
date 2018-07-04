@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
 		user.setBoards(boards);
 		userDAO.save(user);
 	}
+
+	@Override
+	public Board getCurrentBoard() {
+		return getCurrentUser().getCurrentBoard();
+	}
 }

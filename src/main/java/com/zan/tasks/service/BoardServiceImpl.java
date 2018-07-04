@@ -2,7 +2,6 @@ package com.zan.tasks.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +39,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> getBoards(User user) {
 		List<Board> list = new ArrayList<Board>(user.getBoards());     
-		Collections.sort(list, new Comparator<Board>() {
-        public int compare(Board board1, Board board2) {
-                return board1.getName().compareTo(board2.getName());
-        }});
+//		Collections.sort(list, new Comparator<Board>() {
+//        public int compare(Board board1, Board board2) {
+//                return board1.getName().compareTo(board2.getName());
+//        }});
+		Collections.sort(list, (Board o1, Board o2) -> o1.getName().compareTo(o2.getName()));
 		
 		return list;
 	}

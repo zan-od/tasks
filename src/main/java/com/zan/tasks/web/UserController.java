@@ -104,4 +104,10 @@ public class UserController {
  		
 		return "admin";
     }
+	
+	@GetMapping("/user-info")
+    public String userInfo(Model model) {
+ 		
+		return "user_info";
+    }
 }

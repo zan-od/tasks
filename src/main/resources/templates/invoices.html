@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head('Invoices')">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<header th:replace="header :: menu(${boards}, ${currentBoard})">
+		Navigation bar
+	</header>
+<!-- 	<div th:fragment="header2" th:remove="tag"> -->
+<!-- 		<div class="fixed-header"> -->
+<!-- 			<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content justify-content-center"> -->
+<!-- 				<div class="row"> -->
+<!-- 					<div class="col-sm"> -->
+<!-- 						<h3 th:text="${currentBoard.name}" class="board-name">Board</h3> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm"> -->
+<!-- 						<ul class="nav nav-pills table-head" role="group" aria-label="Task statuses"> -->
+<!-- 							<th:block th:each="status: ${taskStatuses}"> -->
+<!-- 								<li class="nav-item"> -->
+<!-- 				  					<a class="nav-link btn-info btn-sm" th:classappend="${status==currentStatus} ? 'active' : ''" th:href="@{/tasks(status=${status.name()})}" th:text="${status.toString()}">Status</a> -->
+<!-- 				  				</li> -->
+<!-- 							</th:block> -->
+<!-- 						</ul> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				
+<!-- 				<div class="btn-toolbar table-head" role="toolbar" aria-label="Tasks toolbar"> -->
+<!-- 				  <a type="button" class="btn btn-sm btn-primary toolbar-btn" href="/task/add/">New task</a> -->
+<!-- 				  <a type="button" class="btn btn-sm btn-info toolbar-btn">Multitask mode</a> -->
+<!-- 				  <a type="button" class="btn btn-sm btn-secondary toolbar-btn">Stop all tasks</a> -->
+<!-- 				  <div class="dropdown show"> -->
+<!-- 					  <a class="btn btn-sm btn-secondary dropdown-toggle toolbar-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 					    Set status -->
+<!-- 					  </a> -->
+					
+<!-- 					  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"> -->
+<!-- 					  	<th:block th:each="status: ${nextTaskStatuses}"> -->
+<!-- 							<form th:action="@{/task/set_status/}" method="post" onSubmit="return getSelectedTasks(event)"> -->
+<!-- 								<input type="hidden" name="status" th:value="${status}"/> -->
+<!-- 								<input type="hidden" name="selectedTasks" value="none"/> -->
+<!-- 								<button class="dropdown-item" type="submit" th:text="${status.toString()}">Action</button> -->
+<!-- 							</form> -->
+<!-- 					    </th:block> -->
+<!-- 					  </div> -->
+<!-- 				  </div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+	<div class="container standard-page-container">
+		<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content justify-content-center">
+			<div class="btn-toolbar table-head" role="toolbar" aria-label="Invoices toolbar">
+				<a type="button" class="btn btn-sm btn-primary toolbar-btn" href="/invoice/add">New invoice</a>
+			</div>
+			<table class="table table-sm table-hover">
+				<thead>
+					<tr>
+						<td></td>
+						<td>Number</td>
+						<td>Date</td>
+						<td>Client</td>
+						<td>Amount</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="invoice: ${invoices}">
+						<td>
+							<a th:href="@{/invoice/edit/{invoiceId}(invoiceId=${invoice.id})}">
+							<img alt="invoice" src="/pictures/invoice.png">
+							</img>
+							</a>
+						</td>
+						<td>
+							<a th:text="${invoice.number}" th:href="@{/invoice/edit/{invoiceId}(invoiceId=${invoice.id})}">Number</a>
+						</td>
+						<td th:text="${invoice.date}">Date</td>
+						<td th:text="${invoice.client.name}">Client</td>
+						<td th:text="${invoice.amount}">Amount</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

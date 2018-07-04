@@ -1,5 +1,7 @@
 package com.zan.tasks.web;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import com.zan.tasks.service.ClientService;
 import com.zan.tasks.service.DurationFormatterService;
 import com.zan.tasks.service.TaskService;
 import com.zan.tasks.service.UserService;
+import com.zan.tasks.service.Web2PyLoaderService;
 
 @Controller
 public class TaskController {
@@ -41,9 +44,13 @@ public class TaskController {
 	@Autowired
 	DurationFormatterService durationFormatter;
 	
-	private Board getCurrentBoard(){
-		return userService.getCurrentUser().getCurrentBoard();
- 	}
+	private Web2PyLoaderService web2PyLoaderService;
+	
+	@Autowired
+	private void setWeb2PyLoaderService(Web2PyLoaderService web2PyLoaderService){
+		this.web2PyLoaderService = web2PyLoaderService;
+	}
+	
 	
 	@GetMapping("/tasks")
     public String tasks(Model model) {
@@ -92,7 +99,7 @@ public class TaskController {
     public String addTask(Model model) {
 		Task newTask = new Task();
 		model.addAttribute("task", newTask);
-		model.addAttribute("currentBoard", getCurrentBoard());
+		model.addAttribute("currentBoard", userService.getCurrentBoard());
 		
 		return "task";
 	}
@@ -101,7 +108,7 @@ public class TaskController {
 	public String editTask(Model model, @PathVariable("taskId") Long taskId) {
 		Task newTask = taskService.getTask(taskId);
 		model.addAttribute("task", newTask);
-		model.addAttribute("currentBoard", getCurrentBoard());
+		model.addAttribute("currentBoard", userService.getCurrentBoard());
 		model.addAttribute("client_id", newTask.getClient() == null ? 0 : newTask.getClient().getId());
 		
 		return "task";
@@ -111,7 +118,7 @@ public class TaskController {
     public String saveTask(@ModelAttribute("task") Task task, @ModelAttribute("client_id") Long clientId) {
 		
 		//System.out.println("task id: " + task.getId());
-		task.setBoard(getCurrentBoard());
+		task.setBoard(userService.getCurrentBoard());
 		task.setClient(clientService.getClient(clientId));
 		if (task.getId() == null){
 			task.setStatus(TaskStatus.NEW);
@@ -164,4 +171,28 @@ public class TaskController {
 		
 		return "redirect:/tasks";
     }
+	
+	@GetMapping("/tasks/import/web2py/")
+    public String openImportPageWeb2Py(Model model) {
+		
+        model.addAttribute("boards", boardService.getBoards(userService.getCurrentUser()));
+        model.addAttribute("url", "http://zan_od.pythonanywhere.com/tasks/default/api/");
+        
+		return "import_tasks_web2py";
+    }
+	
+	@PostMapping("/tasks/import/web2py/")
+	public String importTasksFromWeb2Py(@ModelAttribute("url") String url, @ModelAttribute("login") String login,
+			@ModelAttribute("password") String password, @ModelAttribute("board") Board board) {
+
+		try {
+			web2PyLoaderService.load(url, login, password, board);
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "redirect:/tasks";
+	}
+	
 }
